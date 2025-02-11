@@ -33,28 +33,28 @@ id = ""
     weight     = 1
 
 [[menu.main]]
-    name = "Products"
-    identifier = "menu.products"
-    url = "/products"
+    name = "Services"
+    identifier = "menu.services"
+    url = "/services"
     weight = 2
 
 [[menu.main]]
     name = "Basic"
-    url = "/products/basic"
+    url = "/services/basic"
     weight = 1
-    parent = "menu.products"
+    parent = "menu.services"
 
 [[menu.main]]
     name = "Premium"
-    url = "/products/premium"
+    url = "/services/premium"
     weight = 2
-    parent = "menu.products"
+    parent = "menu.services"
 
 [[menu.main]]
     name = "Deluxe"
-    url = "/products/deluxe"
+    url = "/services/deluxe"
     weight = 3
-    parent = "menu.products"
+    parent = "menu.services"
 
 [[menu.main]]
     identifier = "contact"
