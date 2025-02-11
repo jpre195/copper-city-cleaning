@@ -44,8 +44,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
-      - name: NPM install
-        run: npm install
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
