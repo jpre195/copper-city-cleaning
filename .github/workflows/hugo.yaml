@@ -40,12 +40,12 @@ jobs:
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
       - name: Install Dart Sass
         run: sudo snap install dart-sass
-      - name: NPM install
-        run: npm install
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: true
+      - name: NPM install
+        run: npm install
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
