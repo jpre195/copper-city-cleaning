@@ -1,8 +1,4 @@
----
-title: ""
-date: {{ .Date }}
-draft: false
-featured: true
-weight: 1
-description: Lorem ipsum dolor
----
++++
+title = ""
+banner = "img/banners/banner-5.jpg"
++++

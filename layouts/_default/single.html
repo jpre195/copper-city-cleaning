@@ -1,41 +1,90 @@
-{{ define "meta_tags" }}
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
 
-<meta property="og:site_name" content="{{ .Site.Title }}" />
-<meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="{{ .Permalink }}" />
-<meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:title" content="{{ .Title }}">
+  <head>
+    {{ partial "headers.html" . }}
+    {{ partial "custom_headers.html" . }}
+  </head>
 
-{{ if .Params.image }}
-{{ with .Params.image }}
-<meta property="og:image" content="{{ . | absURL }}">
-{{ end }}
-{{ else }}
-<meta property="og:image" content="{{ .Site.Params.homepage_meta_tags.meta_og_image | absURL }}">
-{{ end }}
+  <body>
 
-{{- if .Description }}
-<meta name="description" content="{{ .Description }}" />
-<meta property="og:description" content="{{ .Description }}" />
-<meta property="twitter:description" content="{{ .Description }}" />
-{{- else if .Summary }}
-<meta name="description" content="{{ .Summary }}" />
-<meta property="og:description" content="{{ .Summary }}" />
-<meta property="twitter:description" content="{{ .Summary }}" />
-{{- else if .Site.Params.description }}
-<meta name="description" content="{{ .Site.Params.description }}" />
-<meta property="og:description" content="{{ .Site.Params.description }}" />
-<meta property="twitter:description" content="{{ .Site.Params.description }}" />
-{{- end }}
+    <div id="all">
 
-{{ end }}
+        {{ partial "top.html" . }}
 
-{{ define "main" }}
-<div class="mx-auto my-10 max-w-6xl">
-  <div class="mx-3 col-span-3 lg:col-span-2 px-2">
-    <h1 class="title text-5xl mb-4">{{.Title}}</h1>
-    <div class="content prose md:prose-lg lg:prose-xl max-w-none py-1">{{.Content}}</div>
-  </div>
-</div>
-{{ end }}
+        {{ partial "nav.html" . }}
+
+        {{ partial "breadcrumbs.html" . }}
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    <!-- *** LEFT COLUMN *** -->
+
+                    <div class="col-md-9" id="blog-post">
+
+                        {{ if or .Params.author .Params.date }}
+                          <p class="text-muted text-uppercase mb-small text-right">
+                            {{ if isset .Params "authors" }}
+			      {{ i18n "authorBy" }} {{ range $index, $author := .Params.authors }}{{ if $index }}, {{ end }}<a href="{{ (printf "%s/%s" ("authors" | relLangURL) ($author | urlize)) }}">{{ $author }}</a>{{ end }}
+                            {{ end }}
+                            {{ if and .Params.author .Params.date }} | {{ end }}
+                            {{ if .Params.date }}
+                              {{ $createdAt := .Date.Format .Site.Params.date_format }}
+                              {{ range $index, $month := slice "January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December" }}
+                                  {{ $createdAt = replace $createdAt $month (i18n $month) }}
+                              {{ end }}
+                              {{ $createdAt }}
+                            {{ end }}
+                          </p>
+                        {{ end }}
+
+                        <div id="post-content">
+                          {{ .Content }}
+                        </div>
+                        <!-- /#post-content -->
+                        {{ if .Site.Config.Services.Disqus.Shortname }}
+                        <div id="comments">
+                            {{ template "_internal/disqus.html" . }}
+                        </div>
+                        {{ end }}
+
+                    </div>
+                    <!-- /#blog-post -->
+
+                    <!-- *** LEFT COLUMN END *** -->
+
+                    <!-- *** RIGHT COLUMN *** -->
+
+                    <div class="col-md-3">
+
+                        <!-- *** MENUS AND WIDGETS *** -->
+
+                        {{ partial "sidebar.html" . }}
+
+                        <!-- *** MENUS AND FILTERS END *** -->
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                    <!-- *** RIGHT COLUMN END *** -->
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+        {{ partial "footer.html" . }}
+
+    </div>
+    <!-- /#all -->
+
+    {{ partial "scripts.html" . }}
+
+  </body>
+</html>
